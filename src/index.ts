@@ -13,12 +13,21 @@ const config: Config = {
 console.log("filter: ", config.FILTER)
 console.log(github.context.action, github.context.eventName);
 async function runa() {
+    const githubClient: any = new github.GitHub(config.GITHUB_SECRET);
+    if (github.context.action.localeCompare('push')) {
+        const data = await githubClient.repos.createRelease({
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo,
+            tag_name: github.context.sha,
+            draft: true
+        });
+        console.log(data);
+    }
     if (github.context.action.localeCompare('pull_request')) {
 
 
         if (github.context.payload.pull_request) {
             const prData: any = github.context.payload.pull_request;
-            const githubClient: any = new github.GitHub(config.GITHUB_SECRET);
             const data = await githubClient.checks.create({
                 owner: prData.user.login,
                 repo: prData.head.repo.name,
