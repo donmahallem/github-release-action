@@ -19,9 +19,12 @@ async function runa() {
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
             tag_name: github.context.sha,
-            draft: true
+            draft: true,
+            name: "v1.2"
         });
         console.log(data);
+        const dd = import(<any>"./package.json");
+        console.log("outa", dd);
     }
     if (github.context.action.localeCompare('pull_request')) {
 

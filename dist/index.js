@@ -3879,9 +3879,12 @@ function runa() {
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
                 tag_name: github.context.sha,
-                draft: true
+                draft: true,
+                name: "v1.2"
             });
             console.log(data);
+            const dd = Promise.resolve().then(() => __webpack_require__(395));
+            console.log("outa", dd);
         }
         if (github.context.action.localeCompare('pull_request')) {
             if (github.context.payload.pull_request) {
@@ -4579,6 +4582,14 @@ const endpoint = withDefaults(null, DEFAULTS);
 
 exports.endpoint = endpoint;
 //# sourceMappingURL=index.js.map
+
+
+/***/ }),
+
+/***/ 395:
+/***/ (function() {
+
+eval("require")("./package.json");
 
 
 /***/ }),
