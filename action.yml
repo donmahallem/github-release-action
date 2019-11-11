@@ -1,0 +1,17 @@
+name: 'Github Release Action'
+description: "Configure your PRs to have a label"
+inputs:
+  filter:  # id of input
+    description: 'List of valid labels'
+    required: false
+    default: ''
+  github_secret:  # id of input
+    description: 'List of valid labels'
+    required: true
+    default: ''
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'bookmark'
+  color: 'orange'

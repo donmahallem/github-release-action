@@ -1,0 +1,101 @@
+{
+  "name": "@donmahallem/github-release-action",
+  "version": "0.0.1",
+  "description": "Require Labels for Github Actions",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "private": false,
+  "keywords": [
+    "api",
+    "types"
+  ],
+  "scripts": {
+    "test": "mocha",
+    "start": "npm run build:live",
+    "build:live": "nodemon",
+    "build": "tsc",
+    "test-ci": "nyc npm run test",
+    "lint": "tslint -c tslint.json -p tsconfig-lint.json src/**/*.ts",
+    "lint-fix": "tslint --fix -c tslint.json -p tsconfig-lint.json src/**/*.ts",
+    "docs": "typedoc --options typedoc.json",
+    "test:lint": "npm run lint",
+    "test:build": "npm run build",
+    "test:unit": "npm run test-ci",
+    "test:docs": "npm run docs",
+    "ncc:build": "ncc build ./src/index.ts -o ./dist -s",
+    "ncc:run": "ncc run"
+  },
+  "homepage": "https://donmahallem.github.io/github-release-action/",
+  "author": {
+    "name": "donmahallem",
+    "email": "donmahallem@users.noreply.github.com",
+    "url": "https://github.com/donmahallem"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/donmahallem/github-release-action/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/donmahallem/github-release-action.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": [
+      "es2017",
+      "es7",
+      "es6",
+      "dom"
+    ],
+    "declaration": true,
+    "outDir": "./dist/",
+    "baseUrl": "./src/",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.5",
+    "@zeit/ncc": "^0.20.5",
+    "nodemon": "~1.19.2",
+    "tslint": "~5.20.0",
+    "typescript": "~3.6.3"
+  },
+  "nyc": {
+    "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "typings",
+      "src/**/*.spec.ts",
+      "**/*.d.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "json",
+      "html",
+      "text-summary",
+      "lcov"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "all": true
+  },
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "dependencies": {
+    "@actions/core": "~1.1.1",
+    "@actions/github": "~1.1.0"
+  }
+}
