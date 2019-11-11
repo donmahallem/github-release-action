@@ -1,6 +1,7 @@
 import * as github from '@actions/github';
 import * as actionscore from '@actions/core';
 import { Config } from './config';
+import * as Octokit from "@octokit/rest";
 
 const config: Config = {
     FILTER: actionscore.getInput("filter", {
@@ -13,7 +14,7 @@ const config: Config = {
 console.log("filter: ", config.FILTER)
 console.log(github.context.action, github.context.eventName);
 async function runa() {
-    const githubClient: any = new github.GitHub(config.GITHUB_SECRET);
+    const githubClient: Octokit = new github.GitHub(config.GITHUB_SECRET) as any;
     if (github.context.action.localeCompare('push')) {
         const data = await githubClient.repos.createRelease({
             owner: github.context.repo.owner,
