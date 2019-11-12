@@ -20,18 +20,39 @@ console.log(github.context.action, github.context.eventName);
 async function runa() {
     const githubClient: Octokit = new github.GitHub(config.GITHUB_SECRET) as any;
     if (github.context.action.localeCompare('push')) {
-        const dd = readPackage();
-        console.log("outa", dd);
-        console.log("V", dd.version);
-        const data = await githubClient.repos.createRelease({
+        const packageInfo: {
+            version: string,
+            name: string
+        } = readPackage();
+        const releases: Octokit.Response<Octokit.ReposListReleasesResponse> = await githubClient.repos.listReleases({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
-            target_commitish: github.context.sha,
-            draft: true,
-            tag_name: "v" + dd.version,
-            name: "Release " + dd.version
+            page: 100
         });
-        console.log(data);
+        const filteredReleases: Octokit.ReposListReleasesResponseItem[] = releases.data
+            .filter((value: Octokit.ReposListReleasesResponseItem) => {
+                return value.tag_name === "v" + packageInfo.version;
+            });
+        if (filteredReleases.length > 0) {
+            actionscore.info("Updating Release");
+            const resp: any = await githubClient.repos.updateRelease({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                release_id: filteredReleases[0].id,
+                target_commitish: github.context.sha
+            })
+            actionscore.info("Done");
+        } else {
+            const data = await githubClient.repos.createRelease({
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo,
+                target_commitish: github.context.sha,
+                draft: true,
+                tag_name: "v" + packageInfo.version,
+                name: "Release " + packageInfo.version
+            });
+            console.log(data);
+        }
     }
     if (github.context.action.localeCompare('pull_request')) {
 
