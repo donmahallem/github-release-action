@@ -32,7 +32,11 @@ async function runa() {
         const tags: string[] = releases.data.map((value) => {
             return value.tag_name;
         });
-        console.log(tags, releases.data, await githubClient.users.listBlocked());
+        console.log(tags, releases.data, await githubClient.repos.getReleaseByTag({
+            tag: "v0.0.1",
+            owner: github.context.repo.owner,
+            repo: github.context.repo.repo
+        }));
         const filteredReleases: Octokit.ReposListReleasesResponseItem[] = releases.data
             .filter((value: Octokit.ReposListReleasesResponseItem) => {
                 return value.tag_name === "v" + packageInfo.version;

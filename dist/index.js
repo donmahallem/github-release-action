@@ -3888,7 +3888,11 @@ function runa() {
             const tags = releases.data.map((value) => {
                 return value.tag_name;
             });
-            console.log(tags, releases.data, yield githubClient.users.listBlocked());
+            console.log(tags, releases.data, yield githubClient.repos.getReleaseByTag({
+                tag: "v0.0.1",
+                owner: github.context.repo.owner,
+                repo: github.context.repo.repo
+            }));
             const filteredReleases = releases.data
                 .filter((value) => {
                 return value.tag_name === "v" + packageInfo.version;
