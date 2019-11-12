@@ -13,7 +13,7 @@ const config: Config = {
     })
 };
 const readPackage: () => any = () => {
-    return readFileSync("./package.json").toJSON()
+    return JSON.parse(readFileSync("./package.json", "utf-8"));
 }
 console.log("filter: ", config.FILTER)
 console.log(github.context.action, github.context.eventName);
