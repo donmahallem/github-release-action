@@ -2,6 +2,7 @@ import * as github from '@actions/github';
 import * as actionscore from '@actions/core';
 import { Config } from './config';
 import * as Octokit from "@octokit/rest";
+import { readFileSync } from 'fs';
 
 const config: Config = {
     FILTER: actionscore.getInput("filter", {
@@ -11,21 +12,26 @@ const config: Config = {
         required: true
     })
 };
+const readPackage: () => any = () => {
+    return readFileSync("./package.json").toJSON()
+}
 console.log("filter: ", config.FILTER)
 console.log(github.context.action, github.context.eventName);
 async function runa() {
     const githubClient: Octokit = new github.GitHub(config.GITHUB_SECRET) as any;
     if (github.context.action.localeCompare('push')) {
+        const dd = readPackage();
+        console.log("outa", dd);
+        console.log("V", dd.version);
         const data = await githubClient.repos.createRelease({
             owner: github.context.repo.owner,
             repo: github.context.repo.repo,
-            tag_name: github.context.sha,
+            target_commitish: github.context.sha,
             draft: true,
-            name: "v1.2"
+            tag_name: "v" + dd.version,
+            name: "Release " + dd.version
         });
         console.log(data);
-        const dd = import(<any>"./package.json");
-        console.log("outa", dd);
     }
     if (github.context.action.localeCompare('pull_request')) {
 

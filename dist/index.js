@@ -3861,6 +3861,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const github = __webpack_require__(469);
 const actionscore = __webpack_require__(470);
+const fs_1 = __webpack_require__(747);
 const config = {
     FILTER: actionscore.getInput("filter", {
         required: false
@@ -3869,22 +3870,27 @@ const config = {
         required: true
     })
 };
+const readPackage = () => {
+    return fs_1.readFileSync("./package.json").toJSON();
+};
 console.log("filter: ", config.FILTER);
 console.log(github.context.action, github.context.eventName);
 function runa() {
     return __awaiter(this, void 0, void 0, function* () {
         const githubClient = new github.GitHub(config.GITHUB_SECRET);
         if (github.context.action.localeCompare('push')) {
+            const dd = readPackage();
+            console.log("outa", dd);
+            console.log("V", dd.version);
             const data = yield githubClient.repos.createRelease({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
-                tag_name: github.context.sha,
+                target_commitish: github.context.sha,
                 draft: true,
-                name: "v1.2"
+                tag_name: "v" + dd.version,
+                name: "Release " + dd.version
             });
             console.log(data);
-            const dd = Promise.resolve().then(() => __webpack_require__(395));
-            console.log("outa", dd);
         }
         if (github.context.action.localeCompare('pull_request')) {
             if (github.context.payload.pull_request) {
@@ -4582,14 +4588,6 @@ const endpoint = withDefaults(null, DEFAULTS);
 
 exports.endpoint = endpoint;
 //# sourceMappingURL=index.js.map
-
-
-/***/ }),
-
-/***/ 395:
-/***/ (function() {
-
-eval("require")("./package.json");
 
 
 /***/ }),
