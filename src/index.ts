@@ -42,6 +42,7 @@ async function runa() {
                 target_commitish: github.context.sha
             })
             actionscore.info("Done");
+            console.log(resp);
         } else {
             const data = await githubClient.repos.createRelease({
                 owner: github.context.repo.owner,

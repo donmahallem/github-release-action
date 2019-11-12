@@ -3879,18 +3879,38 @@ function runa() {
     return __awaiter(this, void 0, void 0, function* () {
         const githubClient = new github.GitHub(config.GITHUB_SECRET);
         if (github.context.action.localeCompare('push')) {
-            const dd = readPackage();
-            console.log("outa", dd);
-            console.log("V", dd.version);
-            const data = yield githubClient.repos.createRelease({
+            const packageInfo = readPackage();
+            const releases = yield githubClient.repos.listReleases({
                 owner: github.context.repo.owner,
                 repo: github.context.repo.repo,
-                target_commitish: github.context.sha,
-                draft: true,
-                tag_name: "v" + dd.version,
-                name: "Release " + dd.version
+                page: 100
             });
-            console.log(data);
+            const filteredReleases = releases.data
+                .filter((value) => {
+                return value.tag_name === "v" + packageInfo.version;
+            });
+            if (filteredReleases.length > 0) {
+                actionscore.info("Updating Release");
+                const resp = yield githubClient.repos.updateRelease({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    release_id: filteredReleases[0].id,
+                    target_commitish: github.context.sha
+                });
+                actionscore.info("Done");
+                console.log(resp);
+            }
+            else {
+                const data = yield githubClient.repos.createRelease({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    target_commitish: github.context.sha,
+                    draft: true,
+                    tag_name: "v" + packageInfo.version,
+                    name: "Release " + packageInfo.version
+                });
+                console.log(data);
+            }
         }
         if (github.context.action.localeCompare('pull_request')) {
             if (github.context.payload.pull_request) {
