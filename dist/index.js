@@ -3888,7 +3888,7 @@ function runa() {
             const tags = releases.data.map((value) => {
                 return value.tag_name;
             });
-            console.log(tags);
+            console.log(tags, releases.data);
             const filteredReleases = releases.data
                 .filter((value) => {
                 return value.tag_name === "v" + packageInfo.version;
