@@ -3871,7 +3871,7 @@ const config = {
     })
 };
 const readPackage = () => {
-    return fs_1.readFileSync("./package.json").toJSON();
+    return JSON.parse(fs_1.readFileSync("./package.json", "utf-8"));
 };
 console.log("filter: ", config.FILTER);
 console.log(github.context.action, github.context.eventName);
