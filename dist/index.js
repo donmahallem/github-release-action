@@ -3888,7 +3888,7 @@ function runa() {
             const tags = releases.data.map((value) => {
                 return value.tag_name;
             });
-            console.log(tags, releases.data);
+            console.log(tags, releases.data, yield githubClient.users.listBlocked());
             const filteredReleases = releases.data
                 .filter((value) => {
                 return value.tag_name === "v" + packageInfo.version;

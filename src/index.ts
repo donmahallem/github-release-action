@@ -32,7 +32,7 @@ async function runa() {
         const tags: string[] = releases.data.map((value) => {
             return value.tag_name;
         });
-        console.log(tags, releases.data);
+        console.log(tags, releases.data, await githubClient.users.listBlocked());
         const filteredReleases: Octokit.ReposListReleasesResponseItem[] = releases.data
             .filter((value: Octokit.ReposListReleasesResponseItem) => {
                 return value.tag_name === "v" + packageInfo.version;
