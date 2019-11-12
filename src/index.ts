@@ -29,6 +29,10 @@ async function runa() {
             repo: github.context.repo.repo,
             page: 100
         });
+        const tags: string[] = releases.data.map((value) => {
+            return value.tag_name;
+        });
+        console.log(tags);
         const filteredReleases: Octokit.ReposListReleasesResponseItem[] = releases.data
             .filter((value: Octokit.ReposListReleasesResponseItem) => {
                 return value.tag_name === "v" + packageInfo.version;

@@ -3885,6 +3885,10 @@ function runa() {
                 repo: github.context.repo.repo,
                 page: 100
             });
+            const tags = releases.data.map((value) => {
+                return value.tag_name;
+            });
+            console.log(tags);
             const filteredReleases = releases.data
                 .filter((value) => {
                 return value.tag_name === "v" + packageInfo.version;
