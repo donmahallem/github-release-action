@@ -3898,7 +3898,7 @@ function runa() {
                     target_commitish: github.context.sha
                 });
                 actionscore.info("Done");
-                console.log(resp);
+                actionscore.info("Update Release: " + resp.data.id);
             }
             else {
                 const data = yield githubClient.repos.createRelease({
@@ -3909,36 +3909,8 @@ function runa() {
                     tag_name: "v" + packageInfo.version,
                     name: "Release " + packageInfo.version
                 });
-                console.log(data);
+                actionscore.info("Create Release: " + data.data.id);
             }
-        }
-        if (github.context.action.localeCompare('pull_request')) {
-            if (github.context.payload.pull_request) {
-                const prData = github.context.payload.pull_request;
-                const data = yield githubClient.checks.create({
-                    owner: prData.user.login,
-                    repo: prData.head.repo.name,
-                    name: "require-label",
-                    head_sha: prData.head.sha,
-                    conclusion: prData.labels.length > 0 ? 'success' : 'failure'
-                });
-                const data2 = yield githubClient.repos.requestPageBuild({
-                    owner: prData.user.login,
-                    repo: prData.head.repo.name
-                });
-                console.log(JSON.stringify(data));
-                console.log(JSON.stringify(data2));
-            }
-            else {
-                console.log("test");
-                const payload = JSON.stringify(github.context.payload, undefined, 2);
-                console.log(payload);
-                actionscore.setOutput("T1", "T2");
-                actionscore.setFailed("Bommel");
-            }
-        }
-        else {
-            actionscore.setFailed('This action can only be used on pull requests');
         }
     });
 }
