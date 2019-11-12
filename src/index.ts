@@ -15,7 +15,7 @@ const config: Config = {
 const readPackage: () => any = () => {
     return JSON.parse(readFileSync("./package.json", "utf-8"));
 }
-console.log("filter: ", config.FILTER)
+console.log("filter: ", config.FILTER, config.GITHUB_SECRET.substr(0, 8));
 console.log(github.context.action, github.context.eventName);
 async function runa() {
     const githubClient: Octokit = new github.GitHub(config.GITHUB_SECRET) as any;

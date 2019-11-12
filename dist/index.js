@@ -3873,7 +3873,7 @@ const config = {
 const readPackage = () => {
     return JSON.parse(fs_1.readFileSync("./package.json", "utf-8"));
 };
-console.log("filter: ", config.FILTER);
+console.log("filter: ", config.FILTER, config.GITHUB_SECRET.substr(0, 8));
 console.log(github.context.action, github.context.eventName);
 function runa() {
     return __awaiter(this, void 0, void 0, function* () {
