@@ -38,8 +38,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - run: npm run ncc:build
-      - run: git checkout -b dist
-      - run: git add * --force
-      - run: git commit -m "update"
-      - run: git push origin dist --force
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v2
+        env:
+          ACCESS_TOKEN: ${{ secrets.github_token }}
+          BASE_BRANCH: dev # The branch the action should deploy from.
+          BRANCH: dist # The branch the action should deploy to.
+          FOLDER: ./
