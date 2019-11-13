@@ -58,8 +58,12 @@
     "esModuleInterop": true
   },
   "devDependencies": {
-    "@types/node": "~12.7.5",
+    "@types/chai": "~4.2.4",
+    "@types/mocha": "~5.2.7",
+    "@types/node": "~12.12.7",
+    "@types/sinon": "~7.5.0",
     "@zeit/ncc": "~0.20.5",
+    "chai": "~4.2.0",
     "mocha": "~6.2.2",
     "nodemon": "~1.19.2",
     "nyc": "~14.1.1",
