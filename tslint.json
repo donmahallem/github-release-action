@@ -60,9 +60,9 @@
         "file-header": [
             true,
             {
-                "match": "Source \\S+",
+                "match": "Source \\S+github-release-action",
                 "allow-single-line-comments": true,
-                "default": "Source https://github.com/donmahallem/TrapezeApiTypes",
+                "default": "Source https://github.com/donmahallem/github-release-action",
                 "enforce-trailing-newline": false
             }
         ],

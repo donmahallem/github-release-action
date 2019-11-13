@@ -1,5 +1,5 @@
 /*!
- * Source https://github.com/donmahallem/TrapezeApiTypes
+ * Source https://github.com/donmahallem/github-release-action
  */
 
 export interface IConfig {

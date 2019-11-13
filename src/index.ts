@@ -1,5 +1,5 @@
 /*!
- * Source https://github.com/donmahallem/TrapezeApiTypes
+ * Source https://github.com/donmahallem/github-release-action
  */
 
 import * as actionscore from "@actions/core";
