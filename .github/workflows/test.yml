@@ -39,7 +39,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
       - run: npm run ncc:build
-      - run: git checkout dist
-      - run: git add *
+      - run: git checkout -b dist
+      - run: git add * --force
       - run: git commit -m "update"
-      - run: git push origin
+      - run: git push origin dist --force

@@ -3,3 +3,4 @@ data/
 .nyc_output/
 coverage/
 docs/
+dist/
