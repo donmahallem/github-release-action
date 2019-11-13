@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publishing the Action
     needs: test_project
-    if: github.event_name == "push" && endsWith(github.ref,"dev")
+    if: github.event_name == 'push' && endsWith(github.ref,'dev')
     steps:
       - name: Checkout
         uses: actions/checkout@v1
