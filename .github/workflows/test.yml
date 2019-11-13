@@ -38,10 +38,19 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+      - name: Build
+        run: npm run ncc:build
+      - name: Create Data
+        run: |
+          mkdir build2
+          cp -r ./dist build2
+          cp action.yml build2
+          cp README.md README.md
+          cp LICENSE LICENSE
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
           ACCESS_TOKEN: ${{ secrets.github_token }}
           BASE_BRANCH: dev # The branch the action should deploy from.
           BRANCH: dist # The branch the action should deploy to.
-          FOLDER: ./
+          FOLDER: ./dist
