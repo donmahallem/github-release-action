@@ -20,3 +20,14 @@ jobs:
         run: npm run test:lint
       - name: Npm test
         run: npm run test:unit
+  publish_action:
+    runs-on: ubuntu-latest
+    name: Publishing the Action
+    needs: test_project
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
