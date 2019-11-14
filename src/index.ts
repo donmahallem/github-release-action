@@ -25,34 +25,33 @@ const runa = async () => {
             name: string,
             version: string,
         } = readPackage();
-        const releases: Octokit.Response<Octokit.ReposListReleasesResponse> = await githubClient.repos.listReleases({
-            owner: github.context.repo.owner,
-            page: 100,
-            repo: github.context.repo.repo,
-        });
-        const filteredReleases: Octokit.ReposListReleasesResponseItem[] = releases.data
-            .filter((value: Octokit.ReposListReleasesResponseItem) =>
-                value.tag_name === "v" + packageInfo.version);
-        if (filteredReleases.length > 0) {
-            actionscore.info("Updating Release");
-            const resp: any = await githubClient.repos.updateRelease({
-                owner: github.context.repo.owner,
-                release_id: filteredReleases[0].id,
-                repo: github.context.repo.repo,
-                target_commitish: github.context.sha,
-            });
-            actionscore.info("Done");
-            actionscore.info("Update Release: " + resp.data.id);
-        } else {
-            const data = await githubClient.repos.createRelease({
-                draft: true,
-                name: "Release " + packageInfo.version,
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                tag_name: "v" + packageInfo.version,
-                target_commitish: github.context.sha,
-            });
-            actionscore.info("Create Release: " + data.data.id);
+        const versionTagName: string = "v" + packageInfo.version;
+        actionscore.info("Checking Version: " + versionTagName);
+        try {
+            const resp: Octokit.Response<Octokit.ReposGetReleaseByTagResponse> =
+                await githubClient.repos.getReleaseByTag({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    tag: versionTagName,
+                });
+            actionscore.setOutput("releaseId", "" + resp.data.id);
+            actionscore.setOutput("releaseUrl", resp.data.html_url);
+            actionscore.info("Version already released");
+        } catch (err) {
+            if (err.status === 404) {
+                const resp = await githubClient.repos.createRelease({
+                    draft: false,
+                    name: "Release " + packageInfo.version,
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    tag_name: "v" + packageInfo.version,
+                    target_commitish: github.context.sha,
+                });
+                actionscore.setOutput("releaseId", "" + resp.data.id);
+                actionscore.setOutput("releaseUrl", resp.data.html_url);
+            } else {
+                actionscore.setFailed("Error occured: " + err.status);
+            }
         }
     }
 };
