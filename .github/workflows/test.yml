@@ -43,10 +43,10 @@ jobs:
       - name: Create Data
         run: |
           mkdir build2
-          cp -r ./dist build2
-          cp action.yml build2
-          cp README.md README.md
-          cp LICENSE LICENSE
+          cp -r ./dist build2/dist
+          cp action.yml build2/action.yml
+          cp README.md build2/README.md
+          cp LICENSE build2/LICENSE
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
