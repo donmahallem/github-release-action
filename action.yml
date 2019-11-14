@@ -1,0 +1,13 @@
+name: 'Github Automatic Npm Release Action'
+description: "Creates automatic npm releases"
+inputs:
+  github_secret:  # id of input
+    description: 'List of valid labels'
+    required: true
+    default: ''
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: 'bookmark'
+  color: 'orange'
