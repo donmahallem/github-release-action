@@ -1,10 +1,6 @@
-name: 'Github Release Action'
-description: "Configure your PRs to have a label"
+name: 'Github Automatic Npm Release Action'
+description: "Creates automatic npm releases"
 inputs:
-  filter:  # id of input
-    description: 'List of valid labels'
-    required: false
-    default: ''
   github_secret:  # id of input
     description: 'List of valid labels'
     required: true
