@@ -50,7 +50,7 @@ jobs:
       - name: Build and Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
-          ACCESS_TOKEN: ${{ secrets.github_token }}
+          GITHUB_TOKEN: ${{ secrets.github_token }}
           BASE_BRANCH: dev # The branch the action should deploy from.
           BRANCH: dist # The branch the action should deploy to.
           FOLDER: dist
