@@ -1,0 +1,56 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  test_project:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [ '10', '8' ]
+    name: Node ${{ matrix.node }} Tests
+    steps:
+      - uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Npm install
+        run: npm ci
+      - name: Npm Lint
+        run: npm run test:lint
+      - name: Npm test
+        run: npm run test:unit
+  publish_action:
+    runs-on: ubuntu-latest
+    name: Publishing the Action
+    needs: test_project
+    if: github.event_name == 'push' && endsWith(github.ref,'master')
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Npm install
+        run: npm ci
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Build
+        run: npm run ncc:build
+      - name: Create Data
+        run: |
+          mkdir build2
+          cp -r ./dist build2/dist
+          cp action.yml build2/action.yml
+          cp README.md build2/README.md
+          cp LICENSE build2/LICENSE
+      - name: Build and Deploy
+        uses: JamesIves/github-pages-deploy-action@releases/v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.github_token }}
+          BASE_BRANCH: master # The branch the action should deploy from.
+          BRANCH: dist # The branch the action should deploy to.
+          FOLDER: build2
