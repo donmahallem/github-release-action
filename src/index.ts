@@ -28,16 +28,16 @@ const runa = async () => {
         const versionTagName: string = "v" + packageInfo.version;
         actionscore.info("Checking Version: " + versionTagName);
         try {
-            const resp: Octokit.Response<Octokit.ReposGetReleaseByTagResponse> = await githubClient.repos.getReleaseByTag({
-                owner: github.context.repo.owner,
-                repo: github.context.repo.repo,
-                tag: versionTagName,
-            });
+            const resp: Octokit.Response<Octokit.ReposGetReleaseByTagResponse> =
+                await githubClient.repos.getReleaseByTag({
+                    owner: github.context.repo.owner,
+                    repo: github.context.repo.repo,
+                    tag: versionTagName,
+                });
             actionscore.setOutput("releaseId", "" + resp.data.id);
             actionscore.setOutput("releaseUrl", resp.data.html_url);
             actionscore.info("Version already released");
-        }
-        catch (err) {
+        } catch (err) {
             if (err.status === 404) {
                 const resp = await githubClient.repos.createRelease({
                     draft: false,
