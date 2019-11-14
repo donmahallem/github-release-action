@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Publishing the Action
     needs: test_project
-    if: github.event_name == 'push' && endsWith(github.ref,'dev')
+    if: github.event_name == 'push' && endsWith(github.ref,'master')
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -51,6 +51,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@releases/v2
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
-          BASE_BRANCH: dev # The branch the action should deploy from.
+          BASE_BRANCH: master # The branch the action should deploy from.
           BRANCH: dist # The branch the action should deploy to.
           FOLDER: build2
