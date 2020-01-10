@@ -70,7 +70,7 @@
     "sinon": "~8.0.4",
     "ts-node": "~8.6.1",
     "tslint": "~5.20.1",
-    "typedoc": "~0.15.7",
+    "typedoc": "~0.15.8",
     "typescript": "~3.7.4"
   },
   "nyc": {
