@@ -105,6 +105,6 @@
   ],
   "dependencies": {
     "@actions/core": "~1.2.1",
-    "@actions/github": "~2.0.0"
+    "@actions/github": "~2.0.1"
   }
 }
