@@ -1,0 +1,18 @@
+pull_request_rules:
+  - name: automatic merge dependabot PRs into dev
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - status-success=Test
+      - base=dev
+    actions:
+      merge:
+        method: squash
+        strict: smart+fasttrack
+        strict_method: rebase
+  - name: delete head branch on merged pull requests
+    conditions:
+      - merged
+      - -head~=^(master|dev)$
+      - -author~=^dependabot(|-preview)\[bot\]$
+    actions:
+      delete_head_branch:
