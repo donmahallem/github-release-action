@@ -4,7 +4,7 @@
 
 import * as actionscore from "@actions/core";
 import * as github from "@actions/github";
-import * as Octokit from "@octokit/rest";
+import { Octokit } from "@octokit/rest";
 import { readFileSync } from "fs";
 import { IConfig } from "./config";
 
@@ -19,7 +19,7 @@ const config: IConfig = {
 const readPackage: () => any = () =>
     JSON.parse(readFileSync("./package.json", "utf-8"));
 const runa = async () => {
-    const githubClient: Octokit = new github.GitHub(config.GITHUB_SECRET) as any;
+    const githubClient: github.GitHub = new github.GitHub(config.GITHUB_SECRET) as any;
     if (github.context.action.localeCompare("push")) {
         const packageInfo: {
             name: string,
