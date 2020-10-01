@@ -105,7 +105,7 @@
     "src/*"
   ],
   "dependencies": {
-    "@actions/core": "~1.2.4",
+    "@actions/core": "~1.2.6",
     "@actions/github": "~2.1.1",
     "conventional-changelog": "^3.1.21"
   }
