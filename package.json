@@ -10,7 +10,7 @@
     "types"
   ],
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --config ./.mocharc.yml",
     "start": "npm run build:live",
     "build:live": "nodemon",
     "build": "tsc",
