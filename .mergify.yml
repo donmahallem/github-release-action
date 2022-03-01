@@ -1,19 +1,26 @@
+queue_rules:
+  - name: default
+    conditions:
+      # Conditions to get out of the queue (= merged)
+      - check-success=Finish Test
 pull_request_rules:
-  - name: automatic merge dependabot PRs into dev
+  - name: merge PRs labeled ready-to-merge
     conditions:
       - author~=^dependabot(|-preview)\[bot\]$
       - status-success=Node 10 Tests
       - status-success=Node 12 Tests
       - base=dev
     actions:
-      merge:
+      queue:
         method: squash
-        strict: smart+fasttrack
-        strict_method: rebase
+        name: default
   - name: delete head branch on merged pull requests
     conditions:
       - merged
       - -head~=^(master|dev)$
       - -author~=^dependabot(|-preview)\[bot\]$
     actions:
+      label:
+        remove:
+          - ready-to-merge
       delete_head_branch:
