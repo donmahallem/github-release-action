@@ -63,7 +63,7 @@
     "@types/node": "16.11.26",
     "@types/sinon": "10.0.6",
     "@zeit/ncc": "0.22.3",
-    "chai": "4.3.4",
+    "chai": "4.3.6",
     "commitizen": "4.2.4",
     "mocha": "9.2.0",
     "nodemon": "2.0.15",
