@@ -65,13 +65,13 @@
     "@zeit/ncc": "0.22.3",
     "chai": "4.3.4",
     "commitizen": "4.2.4",
-    "mocha": "9.1.3",
+    "mocha": "9.2.0",
     "nodemon": "2.0.15",
     "nyc": "15.1.0",
-    "sinon": "12.0.1",
+    "sinon": "13.0.1",
     "ts-node": "10.4.0",
     "tslint": "6.1.3",
-    "typedoc": "0.22.10",
+    "typedoc": "0.22.11",
     "typescript": "4.5.4"
   },
   "nyc": {
