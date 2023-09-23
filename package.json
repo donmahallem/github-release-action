@@ -60,7 +60,7 @@
   "devDependencies": {
     "@types/chai": "4.3.6",
     "@types/mocha": "9.1.1",
-    "@types/node": "18.17.18",
+    "@types/node": "18.17.19",
     "@types/sinon": "10.0.16",
     "@zeit/ncc": "0.22.3",
     "chai": "4.3.8",
