@@ -58,7 +58,7 @@
     "esModuleInterop": true
   },
   "devDependencies": {
-    "@types/chai": "4.3.16",
+    "@types/chai": "4.3.17",
     "@types/mocha": "9.1.1",
     "@types/node": "20.14.13",
     "@types/sinon": "17.0.3",
