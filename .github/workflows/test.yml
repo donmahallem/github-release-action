@@ -9,7 +9,7 @@ jobs:
         node: [ '12', '10' ]
     name: Node ${{ matrix.node }} Tests
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Setup node
         uses: actions/setup-node@v4
         with:
